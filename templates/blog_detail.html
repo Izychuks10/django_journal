@@ -1,0 +1,384 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ blog.title }} - Umuoghara Academic Forum</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="icon" type="image/png" href="{% static 'img/umuoghara_logo.jpg' %}" />
+    <style>
+        /* Ensure the video covers the entire body */
+        .back-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        body {
+            margin: 0;
+            color: #ffffff; /* Default text color for the body */
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .logo span {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffffff; /* Header text color */
+        }
+
+        header ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        header ul li {
+            margin-left: 15px;
+        }
+
+        header ul li a {
+            text-decoration: none;
+            color: #ffffff; /* Header link color */
+            transition: color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        header ul li a:hover {
+            color: #00bcd4;
+        }
+
+        /* Comment section styling */
+        .comment-section {
+            margin-top: 30px;
+            background-color: rgba(0, 0, 0, 0.9); /* Opaque background */
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .comment-section h5 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ffffff; /* Comment section heading color */
+            text-align: left;
+        }
+
+        #comments-section .comment {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: #ffffff; /* Comment text color */
+        }
+
+        #comments-section .comment strong {
+            font-size: 1rem;
+            color: #00bcd4;
+            margin-right: 5px;
+        }
+
+        #comments-section .comment p {
+            font-size: 0.9rem;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            color: #ffffff; /* Comment paragraph color */
+        }
+
+        #comments-section .comment span {
+            font-size: 0.8rem;
+            color: #cccccc; /* Slightly brighter timestamp */
+        }
+
+        #comments-section .comment .btn-danger {
+            padding: 0.2rem 0.5rem;
+            font-size: 0.75rem;
+            margin-left: 5px;
+            background-color: #dc3545; /* Red background */
+            border-color: #dc3545; /* Red border */
+            color: #ffffff; /* White text */
+        }
+
+        #comments-section .comment .btn-danger:hover {
+            background-color: #c82333; /* Darker red on hover */
+            border-color: #c82333;
+        }
+
+        .comment-section hr {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2); /* Stronger line */
+        }
+
+        .comment-section h5[style="text-align: center;"] {
+            font-size: 1.1rem;
+            margin-top: 20px;
+            color: #ffffff; /* Form heading color */
+            text-align: left;
+        }
+
+        .comment-section .form-group {
+            margin-bottom: 10px;
+        }
+
+        .comment-section label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #ffffff; /* Form label color */
+        }
+
+        .comment-section textarea.form-control {
+            font-size: 0.9rem;
+            color: #ffffff; /* Form textarea color */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            border-color: #cccccc;
+        }
+
+        .comment-section textarea.form-control:focus {
+            border-color: #00bcd4;
+            box-shadow: 0 0 0 0.2rem rgba(0, 188, 212, 0.25);
+        }
+
+        .comment-section button.btn-primary {
+            font-size: 0.9rem;
+            padding: 0.3rem 0.7rem;
+            background-color: #007bff; /* Primary blue */
+            border-color: #007bff;
+            color: #ffffff;
+        }
+
+        .comment-section button.btn-primary:hover {
+            background-color: #0069d9; /* Darker blue on hover */
+            border-color: #0062cc;
+        }
+
+        .main-wrapper {
+            margin: 0 auto;
+            max-width: 1000px;
+            padding: 20px;
+        }
+
+        .page-title {
+            background-image: url('/static/img/header-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 40px 0;
+            color: #ffffff; /* Page title text color */
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .page-title .block h1 {
+            font-size: 2rem;
+        }
+
+        .footer {
+            background-color: rgb(67, 92, 145);
+            color: #ffffff; /* Footer text color */
+            padding: 15px 0;
+            text-align: center;
+            margin-top: 30px;
+            border-radius: 10px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            font-size: 0.8rem;
+        }
+
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .blog-item-content {
+            background-color: rgba(0, 0, 0, 0.9); /* Opaque background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            margin-left: 0;
+        }
+
+        .blog-item-content p {
+            font-size: 0.9rem;
+            color: #ffffff; /* Blog content text color */
+        }
+
+        .right-image {
+            border-radius: 8px;
+            max-width: 100%; /* Ensure image is responsive */
+            height: auto;
+        }
+
+        .right-image-placeholder {
+            width: 100%;
+            height: auto;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: #6c757d;
+            font-size: 0.9rem;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <video autoplay loop muted plays-inline class="back-video">
+        <source src="{% static 'img/bgvideo.mp4' %}" type="video/mp4">
+    </video>
+    <header class="animate__animated animate__fadeInDown">
+        <div class="logo">
+            <img src="{% static 'img/umuoghara_logo.jpg' %}" alt="UAForum Logo" style="height: 30px; margin-right: 10px;">
+            <span style="font-size: 1.2rem; font-weight: bold; color: #ffffff;">UMUAFO</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'blog' %}" style="text-decoration: none;">Back to Blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-wrapper">
+        <section class="page-title bg-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block text-center">
+                            <h1 class="text-capitalize mb-4" style="font-size: 30px; color: black">{{ blog.title }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section blog-wrap bg-gray" class="container my-5" style="background-color: #000000; opacity: 0.9; border-radius: 15px; text-align: center; border: 1px solid white; padding: 20px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="blog-item-content">
+                            <p class="lead mb-4">{{ blog.content|safe }}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        {% if blog.image %}
+                            <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="img-fluid right-image">
+                        {% else %}
+                            <div class="right-image-placeholder">
+                                <span>No Image Available</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="comment-section">
+            <h5 style="font-size: 1.2rem; margin-bottom: 10px;">Comments</h5>
+            <div id="comments-section">
+                {% for comment in blog.comments.all %}
+                    <div class="comment">
+                        <strong>{{ comment.user.username }}</strong>
+                        <p>{{ comment.text }}</p>
+                        <span>{{ comment.created_at|date:"F j, Y, g:i a" }}</span>
+                        {% if request.user == comment.user %}
+                            <a href="{% url 'delete_comment' comment.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        {% endif %}
+                    </div>
+                {% empty %}
+                    <p style="font-size: 0.9rem;">No comments yet. Be the first to comment!</p>
+                {% endfor %}
+            </div>
+            <hr>
+            <h5 style="font-size: 1.1rem; margin-top: 15px;">Leave a Comment</h5>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="commentText">Your Comment</label>
+                    <textarea class="form-control" id="commentText" name="text" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Comment</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 animate__animated animate__fadeIn" style="border-radius: 10px; margin-top: 20px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p>&copy; <span id="current-year"></span> My Blog. All Rights Reserved.</p>
+                    <p class="powered-by">
+                        <img src="{% static 'img/izychuks.png' %}" alt="Izycode Network Logo">
+                        Powered by <span> </span> <a href="https://wa.me/+2348083040355" style="color: #007bff; text-decoration: none;">Izycode_network</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <style>
+            /* Footer Bottom Logo Styling */
+    
+        
+            .powered-by img {
+                width: 30px; /* Adjust size as needed */
+                height: auto;
+                margin-right: 5px; /* Space between logo and text */
+            }
+        </style>
+        <script>
+            // Get the current year
+            const currentYear = new Date().getFullYear();
+            // Set the current year in the footer
+            document.getElementById('current-year').textContent = currentYear;
+        </script>
+    </footer>
+
+    <script src="plugins/jquery/jquery.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>

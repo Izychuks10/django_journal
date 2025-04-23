@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umuoghara Academic Forum - Home</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"> 
+    <link rel="icon" type="image/png" href="{% static 'img/umuoghara_logo.jpg' %}" />
+    <style>
+        /* Ensure the video covers the entire body */
+        .back-video {
+            position: fixed; /* Fix the video in place */
+            top: 0;
+            left: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            object-fit: cover; /* Cover the entire area */
+            z-index: -1; /* Send the video behind other content */
+        }
+
+        body {
+            margin: 0;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.75); /* Slightly more opaque */
+            padding: 15px 20px; /* Adjusted padding */
+            display: flex;
+            justify-content: space-between; /* Space out logo and navigation */
+            align-items: center; /* Vertically align logo and navigation */
+            z-index: 2; /* Ensure header is above other content */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added subtle shadow */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 1.8rem; /* Slightly larger logo text */
+            font-weight: bold;
+        }
+
+        .logo img {
+            height: 40px; /* Adjusted logo height */
+            margin-right: 15px; /* Adjusted margin */
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: #eee; /* Slightly lighter text */
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 1.1rem; /* Slightly larger link text */
+        }
+
+        nav ul li a:hover {
+            color: #00bcd4; /* Different hover color */
+        }
+
+        nav ul li a.active {
+            color: #00bcd4;
+            font-weight: bold;
+        }
+
+        /* Content Styles */
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 60px); /* Adjust 60px based on header height */
+            padding-top: 60px; /* Add padding to avoid overlap with fixed header */
+            text-align: center;
+            color: white;
+        }
+
+        .content h1 {
+            font-size: 50px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <video autoplay loop muted plays-inline class="back-video">
+        <source src="{% static 'img/bgvideo.mp4' %}" type="video/mp4">
+    </video>
+    <header class="animate__animated animate__slideInDown">
+        <div class="logo">
+            <img src="{% static 'img/umuoghara_logo.jpg' %}" alt="UAForum Logo">
+            UMUAFO
+        </div>
+        <nav class="animate__animated animate__fadeIn">
+            <ul>
+                <li><a href="{% url 'journals' %}" style="text-decoration: none;">Journals</a></li>
+                <li><a href="{% url 'blog' %}" style="text-decoration: none;">Blog</a></li>
+                <li><a href="{% url 'your_logout' %}" style="text-decoration: none;">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="content animate__animated animate__fadeInDown">
+        <h1 class="animate__animated animate__fadeInUpleft" style="color: black;">
+            Welcome {{ user.username }}
+        </h1>
+    </div>
+</body>
+</html>

@@ -1,0 +1,553 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umuoghara Academic Forum - Register</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="icon" type="image/png" href="{% static 'img/umuoghara_logo.jpg' %}" />
+    <style>
+        /* Ensure the video covers the entire body */
+        .back-video {
+            position: fixed; /* Fix the video in place */
+            top: 0;
+            left: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            object-fit: cover; /* Cover the entire area */
+            z-index: -1; /* Send the video behind other content */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Social Media Bar Styles */
+        .social-media-bar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .social-media-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .social-media-container a {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        .social-media-container img {
+            width: 30px;
+            height: 30px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-media-container img:hover {
+            opacity: 1;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 40px; /* Adjusted top to account for social media bar */
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+            margin-bottom: 50px; /* Increased margin-bottom for space */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: #f8f9fa;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .logo img {
+            height: 60px;
+            margin-right: 20px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: #e9ecef;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #00bcd4;
+        }
+
+        nav ul li a.active {
+            color: #00bcd4;
+            font-weight: bold;
+        }
+
+
+        /* Register Form Styles */
+        .register-container {
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 30px; /* Adjusted padding */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            width: 400px; /* Adjusted width */
+            max-width: 90%;
+            margin: 120px auto 60px auto; /* Increased top margin, increased bottom margin */
+        }
+
+        .register-container h2 {
+            text-align: center;
+            margin-bottom: 25px; /* Adjusted margin */
+            color: #00bcd4; /* Different heading color */
+            font-size: 2rem; /* Larger heading */
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ddd; /* Slightly lighter label text */
+            font-size: 1rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #555; /* Darker border */
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #00bcd4; /* Different focus color */
+            background-color: rgba(255, 255, 255, 0.2);
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
+        }
+
+        .error-message {
+            color: #ff6b6b; /* Different error color */
+            font-size: 0.9rem;
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .btn-register {
+            background-color: #00bcd4; /* Different button color */
+            color: white;
+            border: none;
+            padding: 12px 20px; /* Adjusted padding */
+            border-radius: 50px; /* Rounded button */
+            cursor: pointer;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            margin-top: 25px;
+            font-weight: bold;
+        }
+
+        .btn-register:hover {
+            background-color: #008699; /* Darker hover color */
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px; /* Adjusted margin */
+            font-size: 1rem;
+            color: #ddd; /* Lighter link text */
+        }
+
+        .login-link a {
+            color: #00bcd4; /* Different link color */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.75) !important;
+            color: #eee !important;
+            padding: 60px 0 !important;
+            text-align: left;
+            z-index: 2;
+            margin-top: auto; /* Push footer to the bottom */
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 0 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-left {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .footer-left .logo-footer {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .footer-left .logo-footer img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .footer-left p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-links-column {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .footer-links-column h5 {
+            color: #00bcd4;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .footer-links-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: block;
+        }
+
+        .footer-links-column ul li a:hover {
+            color: #fff;
+        }
+
+        .newsletter-column {
+            flex: 1;
+        }
+
+        .newsletter-column h5 {
+            color: #00bcd4;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .newsletter-column textarea {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #eee;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .newsletter-column button {
+            background-color: #00bcd4;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .newsletter-column button:hover {
+            background-color: #008699;
+        }
+
+        .footer-bottom {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-bottom .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer-bottom p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom p a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+
+        .footer-bottom p a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 20px;
+                position: fixed;
+                top: 70px; /* Adjusted top for social media bar */
+            }
+
+            .logo {
+                margin-bottom: 10px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            footer .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-left, .footer-links-column, .newsletter-column {
+                width: 100%;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+
+            .footer-left .logo-footer {
+                justify-content: center;
+            }
+
+            .footer-links-column ul {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="social-media-bar">
+        <div class="social-media-container">
+            <a href="https://www.facebook.com" target="_blank" class="mx-2">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png" alt="Facebook">
+            </a>
+            <a href="https://www.twitter.com" target="_blank" class="mx-2">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/twitter-squared.png" alt="Twitter">
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="mx-2">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png" alt="Instagram">
+            </a>
+            <a href="https://www.linkedin.com" target="_blank" class="mx-2">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/linkedin.png" alt="LinkedIn">
+            </a>
+            <a href="https://www.youtube.com" target="_blank" class="mx-2">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/youtube-play.png" alt="YouTube">
+            </a>
+        </div>
+    </div>
+    <video autoplay loop muted plays-inline class="back-video">
+        <source src="{% static 'img/bgvideo.mp4' %}" type="video/mp4">
+    </video>
+    <header class="animate__animated animate__slideInDown">
+        <div class="logo">
+            <img src="{% static 'img/umuoghara_logo.jpg' %}" alt="UAForum Logo">
+            UMUAFO
+        </div>
+        <nav class="animate__animated animate__fadeIn">
+            <ul>
+                <li><a href="{% url 'index' %}" style="text-decoration: none;">Home</a></li>
+                <li><a href="{% url 'about' %}" style="text-decoration: none;">About</a></li>
+                <li><a href="{% url 'contact' %}" style="text-decoration: none;">Contact</a></li>
+                <li><a href="{% url 'login' %}" class="active" style="text-decoration: none;">Login/Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="register-container animate__animated animate__fadeInUp">
+        <h2 class="animate__animated animate__fadeInDown">Register</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div style="color: #ff6b6b; margin-bottom: 15px; text-align: left;">
+                    Please correct the errors below:
+                    <ul>
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <div class="form-group animate__animated animate__fadeInLeft">
+                <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                {{ form.first_name }}
+            </div>
+            <div class="form-group animate__animated animate__fadeInRight">
+                <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                {{ form.last_name }}
+            </div>
+            <div class="form-group animate__animated animate__fadeInLeft">
+                <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group animate__animated animate__fadeInRight">
+                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group animate__animated animate__fadeInLeft">
+                <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                {{ form.password }}
+            </div>
+            <div class="form-group animate__animated animate__fadeInRight">
+                <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+                {{ form.password2 }}
+            </div>
+            <button type="submit" class="btn-register animate__animated animate__fadeInUp">
+                Register
+            </button>
+        </form>
+        <p class="login-link animate__animated animate__fadeIn">Already have an account? <a href="{% url 'login' %}" style="text-decoration: none;">Login here</a></p>
+    </div>
+
+
+    <footer class="bg-dark text-white py-4 animate__animated animate__fadeInUp">
+        <div class="container">
+            <div class="footer-left">
+                <div class="logo-footer">
+                    <img src="{% static 'img/umuoghara_logo.jpg' %}" alt="UAForum Logo">
+                    <h5>UMUAFO</h5>
+                </div>
+                <p>
+                    Umuoghara Academic Forum is dedicated to empowering the youth of Umuoghara
+                    and promoting our rich cultural heritage through education and community
+                    engagement.
+                </p>
+            </div>
+            <div class="footer-links-column">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                    <li><a href="{% url 'blog' %}">Blog</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    <li><a href="{% url 'login' %}">Login/Register</a></li>
+                </ul>
+            </div>
+            <div class="newsletter-column">
+                <h5>Subscribe to our Newsletter</h5>
+                <textarea placeholder="Enter your email"></textarea>
+                <button>Subscribe</button>
+            </div>
+        </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p>© <span id="current-year"></span> Umuoghara Academic Forum. All rights reserved.</p>
+            <p class="powered-by">
+                <img src="{% static 'img/izychuks.png' %}" alt="Izycode Network Logo">
+                Powered by <span> </span> <a href="https://wa.me/+2348083040355" style="color: #007bff; text-decoration: none;">Izycode_network</a>
+            </p>
+        </div>
+    </div>
+
+    <style>
+        /* Footer Bottom Logo Styling */
+
+    .footer-bottom .container .powered-by img {
+    height: 20px; /* Adjust as needed */
+    margin-right: 5px; /* Space between logo and text */
+    }
+
+    </style>
+
+        <script>
+            // Get the current year
+            const currentYear = new Date().getFullYear();
+            // Set the current year in the footer
+            document.getElementById('current-year').textContent = currentYear;
+        </script>
+    </footer>
+
+    <script>
+        if (history.scrollRestoration) {
+            history.scrollRestoration = 'manual';
+        }
+
+        window.onload = function() {
+            window.scrollTo(0, 0);
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
