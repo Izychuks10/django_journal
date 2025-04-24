@@ -1,0 +1,89 @@
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #FFFFFF; /* White links */
+    text-decoration: none;
+}
+p {
+    color: white; /* Dark gray for better readability */
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #FFFFFF; /* White links */
+    text-decoration: none;
+}
+
+.content {
+    color: #333333; /* Dark text for readability */
+    padding: 10px 0;
+    text-align: center;
+
+}
+
+.cta-button {
+    color: white;
+    padding: 10px 100px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}
+.container {
+    max-width: 800px; /* Limit the width of the container */
+    margin: 0 auto; /* Center the container */
+}
+
+
+
+@media (min-ratio: 16/9) {
+    .back-video {
+        width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-ratio: 16/9) {
+    .back-video {
+        width: auto;
+        height: 100%;
+    }
+}
+
+
+footer {
+    background-color: #333; /* Dark background for the footer */
+    color: #FFFFFF; /* White text */
+    text-align: center; /* Center the footer content */
+    padding: 20px; /* Space around the footer content */
+    position: relative; /* Positioning context */
+    bottom: 0; /* Stick to the bottom */
+    width: 100%; /* Full width */
+}
+
+footer a {
+    color: #FFFFFF; /* White links */
+    text-decoration: none; /* No underline */
+}
